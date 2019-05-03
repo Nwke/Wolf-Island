@@ -111,10 +111,10 @@ class WolfMan(Animal):
         self.all_wolf_men.append(self)
 
         self.follow_rabbit = False
-        self.follow_wolfgirl = False
+        self.follow_wolf_girl = False
 
         self.followed_rabbit = None
-        self.followed_wolfgirl = None
+        self.followed_wolf_girl = None
 
         self.name = 'wolf MAN'
 
@@ -153,20 +153,20 @@ class WolfMan(Animal):
                     Animal.all_animals.remove(self)
 
         elif not self.follow_rabbit:
-            self.search_wolfgirls()
+            self.search_wolf_girls()
 
-        if self.follow_wolfgirl:
-            if self.x < self.followed_wolfgirl.x:
+        if self.follow_wolf_girl:
+            if self.x < self.followed_wolf_girl.x:
                 self.x += 1
-            elif self.x > self.followed_wolfgirl.x:
+            elif self.x > self.followed_wolf_girl.x:
                 self.x -= 1
 
-            if self.y < self.followed_wolfgirl.y:
+            if self.y < self.followed_wolf_girl.y:
                 self.y += 1
-            elif self.y > self.followed_wolfgirl.y:
+            elif self.y > self.followed_wolf_girl.y:
                 self.y -= 1
 
-            if self.x == self.followed_wolfgirl.x and self.y == self.followed_wolfgirl.y:
+            if self.x == self.followed_wolf_girl.x and self.y == self.followed_wolf_girl.y:
                 sex = random.randint(0, 1)
                 print(f'The wolf kid has been born')
                 if sex == 0:
@@ -174,8 +174,8 @@ class WolfMan(Animal):
                 elif sex == 1:
                     Animal.all_wolf_men.append(WolfMan(((self.x + 10) % 20) + 1, ((self.y + 15) % 20) + 1))
 
-                self.follow_wolfgirl = False
-                self.followed_wolfgirl = None
+                self.follow_wolf_girl = False
+                self.followed_wolf_girl = None
 
         else:
             self.move()
@@ -188,19 +188,20 @@ class WolfMan(Animal):
                     self.follow_rabbit = True
                     self.followed_rabbit = rabbit
 
-                    self.follow_wolfgirl = False
-                    self.followed_wolfgirl = None
+                    self.follow_wolf_girl = False
+                    self.followed_wolf_girl = None
 
-    def search_wolfgirls(self):
-        if not self.follow_wolfgirl:
-            for wolfgirl in Animal.all_wolf_girl:
+    def search_wolf_girls(self):
+        if not self.follow_wolf_girl:
+            for wolf_girl in Animal.all_wolf_girl:
 
-                distance_to_obj = math.sqrt(((self.x - wolfgirl.x) ** 2) + ((self.y - wolfgirl.y) ** 2))
+                distance_to_obj = math.sqrt(((self.x - wolf_girl.x) ** 2) + ((self.y - wolf_girl.y) ** 2))
 
-                if not self.follow_wolfgirl and distance_to_obj < 2:
-                    self.follow_wolfgirl = True
-                    self.followed_wolfgirl = wolfgirl
-                    print(f'The wolf girl with id {id(self.followed_wolfgirl)} is watched by wolf man with id {id(self)}')
+                if not self.follow_wolf_girl and distance_to_obj < 2:
+                    self.follow_wolf_girl = True
+                    self.followed_wolf_girl = wolf_girl
+                    print(f'The wolf girl with id {id(self.followed_wolf_girl)} '
+                          f'is watched by wolf man with id {id(self)}')
 
 
 class Rabbit(Animal):
