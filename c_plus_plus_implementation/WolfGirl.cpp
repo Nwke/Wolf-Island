@@ -42,7 +42,7 @@ void WolfGirl::setx(int value) {
 }
 
 void WolfGirl::sety(int value) {
-    this->y = value;
+    y = value;
 }
 
 int WolfGirl::get_random(int from, int to) {
@@ -52,15 +52,15 @@ int WolfGirl::get_random(int from, int to) {
 }
 
 void WolfGirl::search_rabbit() {
-    if (!this->follow_rabbit) {
+    if (!follow_rabbit) {
         for (auto rab : *this->all_rabbits) {
 
 
-            if ((!this->follow_rabbit) && (sqrt(pow(this->x - (*rab).getx(), 2) + pow(this->y - (*rab).gety(), 2) < 2))) {
+            if ((!follow_rabbit) && (sqrt(pow(x - (*rab).getx(), 2) + pow(y - (*rab).gety(), 2) < 2))) {
 
 
-                this->follow_rabbit = true;
-                this->followed_rabbit = rab;
+                follow_rabbit = true;
+                followed_rabbit = rab;
                 break;
 
 
@@ -74,91 +74,90 @@ void WolfGirl::search_rabbit() {
 void WolfGirl::tick() {
     cout << "The wolfgirl with uid: " << this << " has coord like " << x << " " << y << endl;
 
-    if (this->follow_rabbit) {
+    if (follow_rabbit) {
 
-        if (find((*(this->all_rabbits)).begin(), (*(this->all_rabbits)).end(), this->followed_rabbit) != (*all_rabbits).end()) {
-            this->follow_rabbit = false;
-            this->followed_rabbit = 0;
+        if (find((*all_rabbits).begin(), (*all_rabbits).end(), followed_rabbit) != (*all_rabbits).end()) {
+            follow_rabbit = false;
+            followed_rabbit = 0;
         }
     }
 
-    this->search_rabbit();
+    search_rabbit();
 
-    if (this->follow_rabbit) {
+    if (follow_rabbit) {
 
-        if (this->x < (*followed_rabbit).getx()) {
-            this->x += 1;
+        if (x < (*followed_rabbit).getx()) {
+            x += 1;
         }
-        else if (this->x > (*followed_rabbit).getx()) {
-            this->x -= 1;
-        }
-
-
-        if (this->y < (*followed_rabbit).gety()) {
-            this->y += 1;
-        }
-        else if (this->y > (*followed_rabbit).gety()) {
-            this->y -= 1;
+        else if (x > (*followed_rabbit).getx()) {
+            x -= 1;
         }
 
-        if ((this->x == (*followed_rabbit).getx()) && (this->y == (*followed_rabbit).gety())) {
+
+        if (y < (*followed_rabbit).gety()) {
+            y += 1;
+        }
+        else if (y > (*followed_rabbit).gety()) {
+            y -= 1;
+        }
+
+        if ((x == (*followed_rabbit).getx()) && (y == (*followed_rabbit).gety())) {
             cout << "RABBIT HAS BEEN DIED ON COORD" << x << " " << y << " BY " << " The wolfgirl with uid: " << this << " has coord like " << x << " " << y << endl;
 
-            if (find((*(this->all_rabbits)).begin(), (*(this->all_rabbits)).end(), this->followed_rabbit) != (*(this->all_rabbits)).end()) {
-                (*(this->all_rabbits)).erase(remove((*(this->all_rabbits)).begin(), (*(this->all_rabbits)).end(), this->followed_rabbit));
+            if (find((*all_rabbits).begin(), (*all_rabbits).end(), followed_rabbit) != (*all_rabbits).end()) {
+                (*all_rabbits).erase(remove((*all_rabbits).begin(), (*all_rabbits).end(), followed_rabbit));
             }
 
-            this->life_points += 1;
+            life_points += 1;
         }
         else {
-            this->life_points -= 0.1;
+            life_points -= 0.1;
 
-            if (this->life_points == 0) {
+            if (life_points == 0) {
                 cout << "The wolfgirl has been died with uid: " << this << " has coord like " << x << " " << y << endl;
                 shared_ptr<WolfGirl> tmp(this);
-                (*(this->all_wolfgirls)).erase(remove((*(this->all_wolfgirls)).begin(), (*(this->all_wolfgirls)).end(), tmp));
+                (*all_wolfgirls).erase(remove((*all_wolfgirls).begin(), (*all_wolfgirls).end(), tmp));
 
             }
         }
     }
     else {
-        this->move();
+        move();
     }
 }
 
 void WolfGirl::move() {
     int code_movement = get_random(1, 9);
 
-    if ((code_movement == 1) && (this->y != FIELD_Y_D)) {
-        this->y -= 1;
+    if ((code_movement == 1) && (y != FIELD_Y_D)) {
+        y -= 1;
     }
-    if ((code_movement == 2) && (this->x != FIELD_X_D)) {
-        this->x -= 1;
+    if ((code_movement == 2) && (x != FIELD_X_D)) {
+        x -= 1;
     }
-    if ((code_movement == 3) && (this->y != FIELD_Y_U)) {
-        this->y += 1;
+    if ((code_movement == 3) && (y != FIELD_Y_U)) {
+        y += 1;
     }
-    if ((code_movement == 4) && (this->y != FIELD_X_U)) {
-        this->x += 1;
+    if ((code_movement == 4) && (y != FIELD_X_U)) {
+        x += 1;
     }
-    if ((code_movement == 5) && (this->x != FIELD_X_D) && (this->y != FIELD_Y_U)) {
-        this->x -= 1;
-        this->y += 1;
+    if ((code_movement == 5) && (x != FIELD_X_D) && (y != FIELD_Y_U)) {
+        x -= 1;
+        y += 1;
     }
-    if ((code_movement == 6) && (this->x != FIELD_X_D) && (this->y != FIELD_Y_D)) {
-        this->x -= 1;
-        this->y -= 1;
+    if ((code_movement == 6) && (x != FIELD_X_D) && (y != FIELD_Y_D)) {
+        x -= 1;
+        y -= 1;
     }
-    if ((code_movement == 7) && (this->x != FIELD_X_U) && (this->y != FIELD_Y_U)) {
-        this->x += 1;
-        this->y += 1;
+    if ((code_movement == 7) && (x != FIELD_X_U) && (y != FIELD_Y_U)) {
+        x += 1;
+        y += 1;
     }
-    if ((code_movement == 8) && (this->x != FIELD_X_U) && (this->y != FIELD_Y_D)) {
-        this->x += 1;
-        this->y -= 1;
+    if ((code_movement == 8) && (x != FIELD_X_U) && (y != FIELD_Y_D)) {
+        x += 1;
+        y -= 1;
     }
     if (code_movement == 9) {
 
     }
-
 }

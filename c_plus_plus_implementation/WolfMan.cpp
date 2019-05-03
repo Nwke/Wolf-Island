@@ -38,11 +38,11 @@ int WolfMan::gety() {
 }
 
 void WolfMan::setx(int value) {
-    this->x = value;
+    x = value;
 }
 
 void WolfMan::sety(int value) {
-    this->y = value;
+    y = value;
 }
 
 int WolfMan::get_random(int from, int to) {
@@ -55,33 +55,33 @@ int WolfMan::get_random(int from, int to) {
 void WolfMan::move() {
     int code_movement = get_random(1, 9);
 
-    if ((code_movement == 1) && (this->y != FIELD_Y_D)) {
-        this->y -= 1;
+    if ((code_movement == 1) && (y != FIELD_Y_D)) {
+        y -= 1;
     }
-    if ((code_movement == 2) && (this->x != FIELD_X_D)) {
-        this->x -= 1;
+    if ((code_movement == 2) && (x != FIELD_X_D)) {
+        x -= 1;
     }
-    if ((code_movement == 3) && (this->y != FIELD_Y_U)) {
-        this->y += 1;
+    if ((code_movement == 3) && (y != FIELD_Y_U)) {
+        y += 1;
     }
-    if ((code_movement == 4) && (this->y != FIELD_X_U)) {
-        this->x += 1;
+    if ((code_movement == 4) && (y != FIELD_X_U)) {
+        x += 1;
     }
-    if ((code_movement == 5) && (this->x != FIELD_X_D) && (this->y != FIELD_Y_U)) {
-        this->x -= 1;
-        this->y += 1;
+    if ((code_movement == 5) && (x != FIELD_X_D) && (y != FIELD_Y_U)) {
+        x -= 1;
+        y += 1;
     }
-    if ((code_movement == 6) && (this->x != FIELD_X_D) && (this->y != FIELD_Y_D)) {
-        this->x -= 1;
-        this->y -= 1;
+    if ((code_movement == 6) && (x != FIELD_X_D) && (y != FIELD_Y_D)) {
+        x -= 1;
+        y -= 1;
     }
-    if ((code_movement == 7) && (this->x != FIELD_X_U) && (this->y != FIELD_Y_U)) {
-        this->x += 1;
-        this->y += 1;
+    if ((code_movement == 7) && (x != FIELD_X_U) && (y != FIELD_Y_U)) {
+        x += 1;
+        y += 1;
     }
-    if ((code_movement == 8) && (this->x != FIELD_X_U) && (this->y != FIELD_Y_D)) {
-        this->x += 1;
-        this->y -= 1;
+    if ((code_movement == 8) && (x != FIELD_X_U) && (y != FIELD_Y_D)) {
+        x += 1;
+        y -= 1;
     }
     if (code_movement == 9) {
 
@@ -94,112 +94,109 @@ void WolfMan::tick() {
 
     if (this->follow_rabbit) {
 
-        if (find((*(this->all_rabbits)).begin(), (*(this->all_rabbits)).end(), this->followed_rabbit) != (*all_rabbits).end()) {
-            this->follow_rabbit = false;
-            this->followed_rabbit = 0;
+        if (find((*all_rabbits).begin(), (*all_rabbits).end(), followed_rabbit) != (*all_rabbits).end()) {
+            follow_rabbit = false;
+            followed_rabbit = 0;
         }
     }
 
-    this->search_rabbit();
+    search_rabbit();
 
-    if (this->follow_rabbit) {
+    if (follow_rabbit) {
 
-        if (this->x < (*followed_rabbit).getx()) {
-            this->x += 1;
+        if (x < (*followed_rabbit).getx()) {
+            x += 1;
         }
-        else if (this->x > (*followed_rabbit).getx()) {
-            this->x -= 1;
-        }
-
-
-        if (this->y < (*followed_rabbit).gety()) {
-            this->y += 1;
-        }
-        else if (this->y > (*followed_rabbit).gety()) {
-            this->y -= 1;
+        else if (x > (*followed_rabbit).getx()) {
+            x -= 1;
         }
 
-        if ((this->x == (*followed_rabbit).getx()) && (this->y == (*followed_rabbit).gety())) {
+
+        if (y < (*followed_rabbit).gety()) {
+            y += 1;
+        }
+        else if (y > (*followed_rabbit).gety()) {
+            y -= 1;
+        }
+
+        if ((x == (*followed_rabbit).getx()) && (y == (*followed_rabbit).gety())) {
             cout << "RABBIT HAS BEEN DIED ON COORD" << x << " " << y << " BY " << " The wolfman with uid: " << this << " has coord like " << x << " " << y << endl;
 
 
-            if (find((*(this->all_rabbits)).begin(), (*(this->all_rabbits)).end(), this->followed_rabbit) != (*(this->all_rabbits)).end()) {
-                (*(this->all_rabbits)).erase(remove((*(this->all_rabbits)).begin(), (*(this->all_rabbits)).end(), this->followed_rabbit));
+            if (find((*all_rabbits).begin(), (*all_rabbits).end(), followed_rabbit) != (*all_rabbits).end()) {
+                (*all_rabbits).erase(remove((*all_rabbits).begin(), (*all_rabbits).end(), followed_rabbit));
             }
 
-            this->life_points += 1;
+            life_points += 1;
         }
         else {
-            this->life_points -= 0.1;
+            life_points -= 0.1;
 
-            if (this->life_points == 0) {
+            if (life_points == 0) {
                 cout << "The wolfgirl has been died with uid: " << this << " has coord like " << x << " " << y << endl;
                 shared_ptr<WolfMan> tmp(this);
-                (*(this->all_wolfmans)).erase(remove((*(this->all_wolfmans)).begin(), (*(this->all_wolfmans)).end(), tmp));
+                (*all_wolfmans).erase(remove((*all_wolfmans).begin(), (*all_wolfmans).end(), tmp));
 
             }
         }
     }
-    else if (!this->follow_rabbit) {
-        this->search_wolfgirls();
+    else if (!follow_rabbit) {
+        search_wolfgirls();
     }
 
 
-    if (this->follow_wolfgirl) {
+    if (follow_wolfgirl) {
         cout << "FOLLOW WOLF GIRL" << endl;
 
-        if (this->x < (*followed_wolfgirl).getx()) {
-            this->x += 1;
+        if (x < (*followed_wolfgirl).getx()) {
+            x += 1;
         }
-        else if (this->x > (*followed_wolfgirl).getx()) {
-            this->x -= 1;
-        }
-
-
-        if (this->y < (*followed_wolfgirl).gety()) {
-            this->y += 1;
-        }
-        else if (this->y > (*followed_wolfgirl).gety()) {
-            this->y -= 1;
+        else if (x > (*followed_wolfgirl).getx()) {
+            x -= 1;
         }
 
 
+        if (y < (*followed_wolfgirl).gety()) {
+            y += 1;
+        }
+        else if (y > (*followed_wolfgirl).gety()) {
+            y -= 1;
+        }
 
-        if ((this->x == (*followed_wolfgirl).getx()) && (this->y == (*followed_wolfgirl).gety())) {
-            int sex = this->get_random(0, 1);
+
+
+        if ((x == (*followed_wolfgirl).getx()) && (y == (*followed_wolfgirl).gety())) {
+            int sex = get_random(0, 1);
+
+            // coords of next childs are a little random
 
             if (sex == 0) {
-                shared_ptr<WolfMan> tmp(new WolfMan(((this->x + 10) % 20) + 1, ((this->y + 10) % 20) + 1, this->all_rabbits, this->all_wolfmans, this->all_wolfgirls));
+                shared_ptr<WolfMan> tmp(new WolfMan(((x + 10) % 20) + 1, ((y + 10) % 20) + 1, all_rabbits, all_wolfmans, all_wolfgirls));
 
-                (*(this->all_wolfmans)).push_back(tmp);
+                (*all_wolfmans).push_back(tmp);
             }
             else {
-                shared_ptr<WolfGirl> tmp(new WolfGirl(((this->x + 10) % 20) + 1, ((this->y + 10) % 20) + 1, this->all_rabbits, this->all_wolfgirls));
-                (*(this->all_wolfgirls)).push_back(tmp);
+                shared_ptr<WolfGirl> tmp(new WolfGirl(((x + 10) % 20) + 1, ((y + 10) % 20) + 1, all_rabbits, all_wolfgirls));
+                (*all_wolfgirls).push_back(tmp);
             }
 
         }
-
     }
     else {
         this->move();
     }
-
-
-
-
 }
 
 void WolfMan::search_wolfgirls() {
 
-    if (!this->follow_wolfgirl) {
-        for (auto wolfgirl : *this->all_wolfgirls) {
+    if (!follow_wolfgirl) {
+        for (auto wolfgirl : *all_wolfgirls) {
 
 
-            if ((!this->follow_wolfgirl) && (sqrt(pow(this->x - (*wolfgirl).getx(), 2) + pow(this->y - (*wolfgirl).gety(), 2) < 2))) {
+            if ((!follow_wolfgirl) && (sqrt(pow(x - (*wolfgirl).getx(), 2) + pow(y - (*wolfgirl).gety(), 2) < 2))) {
                 cout << "WOLF WITH UID " << this << " "<< "STARTED TO FOLLOW TO WOLFGIRL " << endl;
-                this->follow_wolfgirl = true;
-                this->followed_wolfgirl = wolfgirl;
+                follow_wolfgirl = true;
+                followed_wolfgirl = wolfgirl;
                 break;
             }
         }
@@ -208,18 +205,14 @@ void WolfMan::search_wolfgirls() {
 }
 
 void WolfMan::search_rabbit() {
-    if (!this->follow_rabbit) {
-        for (auto rab : *this->all_rabbits) {
+    if (!follow_rabbit) {
+        for (auto rab : *all_rabbits) {
+            if ((!follow_rabbit) && (sqrt(pow(x - (*rab).getx(), 2) + pow(y - (*rab).gety(), 2) < 2))) {
+                follow_rabbit = true;
+                followed_rabbit = rab;
 
-
-            if ((!this->follow_rabbit) && (sqrt(pow(this->x - (*rab).getx(), 2) + pow(this->y - (*rab).gety(), 2) < 2))) {
-
-
-                this->follow_rabbit = true;
-                this->followed_rabbit = rab;
-
-                this->follow_wolfgirl = false;
-                this->followed_wolfgirl = 0;
+                follow_wolfgirl = false;
+                followed_wolfgirl = 0;
 
                 cout << "WE FOUND A RABBIT FOR EAT" << endl;
             }
