@@ -1,8 +1,9 @@
 #pragma once
 #include "pch.h"
+#include "Animal.h"
 
 
-class WolfMan
+class WolfMan : public Animal
 {
 public:
     WolfMan(int x, int y, vector<shared_ptr<Rabbit>> *all_rabbits, vector<shared_ptr<WolfMan>> *all_wolfman, vector<shared_ptr<WolfGirl>> *all_wolfgirls);
