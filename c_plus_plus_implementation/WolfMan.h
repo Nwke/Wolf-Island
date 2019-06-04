@@ -34,14 +34,10 @@ public:
 
     int get_random(int, int);
 
-    void move();
     void tick();
 
     void search_rabbit();
     void search_wolfgirls();
 
-private:
-    int x;
-    int y;
 };
 

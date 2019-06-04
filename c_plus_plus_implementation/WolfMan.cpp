@@ -26,7 +26,7 @@ WolfMan::WolfMan(int x, int y, vector<shared_ptr<Rabbit>> *all_rabbits, vector<s
 
 }
 WolfMan::~WolfMan() {
-    cout << "Wolf girl was deleted" << endl;;
+
 }
 
 int WolfMan::getx() {
@@ -52,13 +52,11 @@ int WolfMan::get_random(int from, int to) {
 }
 
 
-void WolfMan::move() {
-    
-}
+
 
 
 void WolfMan::tick() {
-    cout << "The wolfman with uid: " << this << " has coord like " << x << " " << y << endl;
+    cout << "Волк с уникальным номером: " << this << " имеет координаты " << x << " " << y << endl;
 
     if (this->follow_rabbit) {
 
@@ -88,7 +86,7 @@ void WolfMan::tick() {
         }
 
         if ((x == (*followed_rabbit).getx()) && (y == (*followed_rabbit).gety())) {
-            cout << "RABBIT HAS BEEN DIED ON COORD" << x << " " << y << " BY " << " The wolfman with uid: " << this << " has coord like " << x << " " << y << endl;
+            cout << "Кролик был съеден.Его координаты были: " << x << " " << y << " Съел его волк с уникальным номером: " << this << " он имеет координаты: " << x << " " << y << endl;
 
 
             if (find((*all_rabbits).begin(), (*all_rabbits).end(), followed_rabbit) != (*all_rabbits).end()) {
@@ -101,7 +99,7 @@ void WolfMan::tick() {
             life_points -= 0.1;
 
             if (life_points == 0) {
-                cout << "The wolfgirl has been died with uid: " << this << " has coord like " << x << " " << y << endl;
+                cout << "Волк умер. Его униклаьный номер: " << this << " Он имел координаты " << x << " " << y << endl;
                 shared_ptr<WolfMan> tmp(this);
                 (*all_wolfmans).erase(remove((*all_wolfmans).begin(), (*all_wolfmans).end(), tmp));
 
@@ -114,7 +112,7 @@ void WolfMan::tick() {
 
 
     if (follow_wolfgirl) {
-        cout << "FOLLOW WOLF GIRL" << endl;
+        cout << "Бежим за волчицей" << endl;
 
         if (x < (*followed_wolfgirl).getx()) {
             x += 1;
@@ -162,7 +160,7 @@ void WolfMan::search_wolfgirls() {
 
 
             if ((!follow_wolfgirl) && (sqrt(pow(x - (*wolfgirl).getx(), 2) + pow(y - (*wolfgirl).gety(), 2) < 2))) {
-                cout << "WOLF WITH UID " << this << " "<< "STARTED TO FOLLOW TO WOLFGIRL " << endl;
+                cout << "Волк с уникальным номером: " << this << " "<< "начал преследовать волчицу" << endl;
                 follow_wolfgirl = true;
                 followed_wolfgirl = wolfgirl;
                 break;
@@ -182,7 +180,7 @@ void WolfMan::search_rabbit() {
                 follow_wolfgirl = false;
                 followed_wolfgirl = 0;
 
-                cout << "WE FOUND A RABBIT FOR EAT" << endl;
+                cout << "Преследуем кролика" << endl;
             }
         }
     }

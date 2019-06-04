@@ -13,7 +13,7 @@
 
 
 void Rabbit::try_create_new_rab() {
-    int code = get_random(1, 10);
+    int code = get_random(1, 1103);
 
     if (code == 2) {
         shared_ptr<Rabbit> p1(new Rabbit(this->x, this->y, this->all_rabits));
@@ -55,14 +55,9 @@ Rabbit::Rabbit(int x, int y, vector<shared_ptr<Rabbit>> *all_rabits) {
     this->x = x;
     this->y = y;
     this->all_rabits = all_rabits;
-    //cout << "I was created and i have x and y: " << x << " " << y << endl;
 }
 Rabbit::~Rabbit() {
-    cout << "Rabbit was deleted" << endl;;
 }
 
 
 
-void Rabbit::move() {
-   
-}

@@ -9,6 +9,7 @@
 
 #include "Rabbit.h"
 #include "WolfGirl.h"
+#include "Animal.h"
 
 #include "Constants.h"
 
@@ -25,7 +26,7 @@ WolfGirl::WolfGirl(int x, int y, vector<shared_ptr<Rabbit>> *all_rabbits, vector
 
 
 WolfGirl::~WolfGirl() {
-    cout << "Wolf girl was deleted" << endl;;
+    
 }
 
 
@@ -65,14 +66,14 @@ void WolfGirl::search_rabbit() {
 
 
 
-                cout << "WE FOUND A RABBIT FOR EAT" << endl;
+                cout << "Преследуем кролика" << endl;
             }
         }
     }
 }
 
 void WolfGirl::tick() {
-    cout << "The wolfgirl with uid: " << this << " has coord like " << x << " " << y << endl;
+    cout << "Волчица с уникальным номером: " << this << " Имеет координаты " << this->x << " " << this->y << endl;
 
     if (follow_rabbit) {
 
@@ -102,7 +103,7 @@ void WolfGirl::tick() {
         }
 
         if ((x == (*followed_rabbit).getx()) && (y == (*followed_rabbit).gety())) {
-            cout << "RABBIT HAS BEEN DIED ON COORD" << x << " " << y << " BY " << " The wolfgirl with uid: " << this << " has coord like " << x << " " << y << endl;
+            cout << "Кроллик был съеден. Его координаты были: " << x << " " << y << " Уникальный номер волчицы,съевшая кролика: " << this << " Она имеет координаты " << x << " " << y << endl;
 
             if (find((*all_rabbits).begin(), (*all_rabbits).end(), followed_rabbit) != (*all_rabbits).end()) {
                 (*all_rabbits).erase(remove((*all_rabbits).begin(), (*all_rabbits).end(), followed_rabbit));
@@ -114,7 +115,7 @@ void WolfGirl::tick() {
             life_points -= 0.1;
 
             if (life_points == 0) {
-                cout << "The wolfgirl has been died with uid: " << this << " has coord like " << x << " " << y << endl;
+                cout << "Волчица умерла. Её уникальный номер: " << this << " Она находилась в клетке " << x << " " << y << endl;
                 shared_ptr<WolfGirl> tmp(this);
                 (*all_wolfgirls).erase(remove((*all_wolfgirls).begin(), (*all_wolfgirls).end(), tmp));
 
@@ -126,6 +127,3 @@ void WolfGirl::tick() {
     }
 }
 
-void WolfGirl::move() {
-    
-}

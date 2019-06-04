@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Animal.h"
-
+#include <iostream>
 #include "Constants.h"
 #include <stdlib.h>
 #include <time.h> 
@@ -19,7 +19,7 @@ Animal::~Animal()
 void Animal::move()
 {
     int code_movement = get_random(1, 9);
-
+    
     if ((code_movement == 1) && (y != FIELD_Y_D)) {
         y -= 1;
     }

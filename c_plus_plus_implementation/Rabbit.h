@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class Rabbit
+class Rabbit: public Animal
 {
 public:
     Rabbit(int, int, vector<shared_ptr<Rabbit>>*);
@@ -21,15 +21,12 @@ public:
 
     int get_random(int, int);
 
-    void move();
     void try_create_new_rab();
     void tick();
 
 
     vector<shared_ptr<Rabbit>> *all_rabits;
 
-private:
-    int x;
-    int y;
+
 };
 

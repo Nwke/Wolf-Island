@@ -7,7 +7,7 @@ using namespace std;
 
 
 
-class WolfGirl
+class WolfGirl: public Animal
 {
 public:
     WolfGirl(int, int, vector<shared_ptr<Rabbit>> *, vector<shared_ptr<WolfGirl>> *);
@@ -33,13 +33,10 @@ public:
 
     int get_random(int, int);
 
-    void move();
+
     void tick();
 
     void search_rabbit();
 
-private:
-    int x;
-    int y;
 };
 
