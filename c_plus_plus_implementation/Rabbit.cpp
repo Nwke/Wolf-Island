@@ -13,7 +13,7 @@
 
 
 void Rabbit::try_create_new_rab() {
-    int code = get_random(1, 1103);
+    int code = get_random(1, 100);
 
     if (code == 2) {
         shared_ptr<Rabbit> p1(new Rabbit(this->x, this->y, this->all_rabits));
